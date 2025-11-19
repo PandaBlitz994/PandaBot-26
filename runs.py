@@ -44,9 +44,13 @@ run_white = Color(h=0, s=0, v=100)
 run_red = Color(h=352, s=92, v=75)
 run_blue = Color(h=217, s=94, v=70)
 run_green = Color(h=96, s=67, v=88)
-run_yellow = Color(h=42, s=70, v=100)
+run_yellow = Color(h=45, s=70, v=100)
 run_black = Color(h=200, s=22, v=17)
 run_orenge = Color(h=7, s=86, v=100)
+
+run_color.detectable_colors(
+    [run_white, run_red, run_blue, run_green, run_yellow, run_black, run_orenge]
+)
 
 
 def wheels_cleaning():
@@ -75,22 +79,26 @@ def run_1():
 
 
 def run_2():
-    chassis.straight(500)
-    right_arm.run_angle(-500, 1200)
+    chassis.straight(680)
+    left_arm.run_angle(-500, 250)
 
 
-runs = [
-    Run(run_white, run_1, "W", Color.WHITE),
-    Run(run_yellow, run_2, "Y", Color.YELLOW),
-]
-ran = False
-while not ran:
+# runs = [
+#     Run(run_white, run_1, "W", Color.WHITE),
+#     Run(run_yellow, run_2, "Y", Color.YELLOW),
+# ]
+# ran = False
+# while not ran:
 
-    for run in runs:
-        if run_color.hsv() == run.hsv_color:
-            ran = True
-            wait(500)
-            run.run()
+#     for run in runs:
+#         if run_color.hsv() == run.hsv_color:
+#             ran = True
+#             run.run()
 
+# def detect_color():
+#     if (run_color.hsv().s == run_yellow.s) and (run_color.hsv().v == run_yellow.v) and (run_color)
 
 # print(run_color.hsv())
+
+while True:
+    print(run_color.color())
