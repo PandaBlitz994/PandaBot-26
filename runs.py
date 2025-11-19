@@ -5,6 +5,22 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 from pybricks.tools import hub_menu
 
+
+class Run:
+    def __init__(
+        self, hsv_color: Color, function: callable, symbole: str, button_color: Color
+    ):
+        self.hsv_color = hsv_color
+        self.function = function
+        self.symbole = symbole
+        self.button_color = button_color
+
+    def run(self):
+        hub.display.char(self.symbole)
+        hub.light.on(self.button_color)
+        self.function()
+
+
 # Declaring ports
 hub = PrimeHub()
 left_wheel = Motor(Port.A, Direction.COUNTERCLOCKWISE)  # Cyan
@@ -28,7 +44,7 @@ run_white = Color(h=0, s=0, v=100)
 run_red = Color(h=352, s=92, v=75)
 run_blue = Color(h=217, s=94, v=70)
 run_green = Color(h=96, s=67, v=88)
-run_yellow = Color(h=50, s=71, v=100)
+run_yellow = Color(h=42, s=70, v=100)
 run_black = Color(h=200, s=22, v=17)
 run_orenge = Color(h=7, s=86, v=100)
 
@@ -58,10 +74,23 @@ def run_1():
     chassis.turn(150)
 
 
-if run_color.hsv() == run_white:
-    hub.display.char("W")
-    hub.light.on(Color.WHITE)
-    run_1()
+def run_2():
+    chassis.straight(500)
+    right_arm.run_angle(-500, 1200)
 
-# hub.display.char(run_letter)
-# hub.light.on(Color.BLUE)
+
+runs = [
+    Run(run_white, run_1, "W", Color.WHITE),
+    Run(run_yellow, run_2, "Y", Color.YELLOW),
+]
+ran = False
+while not ran:
+
+    for run in runs:
+        if run_color.hsv() == run.hsv_color:
+            ran = True
+            wait(500)
+            run.run()
+
+
+# print(run_color.hsv())
