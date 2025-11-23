@@ -86,17 +86,24 @@ def run_2():
     left_arm.run_angle(-500, 250)
 
 
-# runs = [
-#     Run(run_white, run_1, "W", Color.WHITE),
-#     Run(run_yellow, run_2, "Y", Color.YELLOW),
-# ]
-# ran = False
-# while not ran:
+def run_none():
+    # setup
+    chassis.settings(500)
+    chassis.straight(-600)
+    chassis.straight(300)
 
-#     for run in runs:
-#         if run_color.hsv() == run.hsv_color:
-#             ran = True
-#             run.run()
+
+runs = [
+    Run(Color.WHITE, run_1, "W"),
+    Run(Color.YELLOW, run_2, "Y"),
+]
+
+ran = False
+while not ran:
+    for run in runs:
+        if run_color.color() == run.color:
+            ran = True
+            run.run()
 
 # def detect_color():
 #     if (run_color.hsv().s == run_yellow.s) and (run_color.hsv().v == run_yellow.v) and (run_color)
