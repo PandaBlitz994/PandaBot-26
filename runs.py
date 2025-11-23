@@ -6,21 +6,6 @@ from pybricks.tools import wait, StopWatch
 from pybricks.tools import hub_menu
 
 
-class Run:
-    def __init__(
-        self, hsv_color: Color, function: callable, symbole: str, button_color: Color
-    ):
-        self.hsv_color = hsv_color
-        self.function = function
-        self.symbole = symbole
-        self.button_color = button_color
-
-    def run(self):
-        hub.display.char(self.symbole)
-        hub.light.on(self.button_color)
-        self.function()
-
-
 # Declaring ports
 hub = PrimeHub()
 left_wheel = Motor(Port.A, Direction.COUNTERCLOCKWISE)  # Cyan
@@ -35,21 +20,36 @@ chassis.use_gyro(True)
 
 
 # default:
-def default_settings():
-    chassis.settings(200, 350, 150, 750)
+d_settings = chassis.settings(200, 350, 150, 750)
+d_settings
+
+
+def reset():
+    hub.imu.reset_heading(0)
+    d_settings
 
 
 # reflection color
-run_white = Color(h=0, s=0, v=100)
-run_red = Color(h=352, s=92, v=75)
-run_blue = Color(h=217, s=94, v=70)
-run_green = Color(h=96, s=67, v=88)
-run_yellow = Color(h=45, s=70, v=100)
-run_black = Color(h=200, s=22, v=17)
-run_orenge = Color(h=7, s=86, v=100)
+Color.WHITE = Color(h=0, s=0, v=100)
+Color.RED = Color(h=352, s=92, v=75)
+Color.BLUE = Color(h=217, s=94, v=70)
+Color.GREEN = Color(h=96, s=67, v=88)
+Color.YELLOW = Color(h=45, s=70, v=100)
+Color.BLACK = Color(h=200, s=22, v=17)
+Color.ORANGE = Color(h=7, s=86, v=100)
+Color.NONE = Color(h=180, s=32, v=7)
 
 run_color.detectable_colors(
-    [run_white, run_red, run_blue, run_green, run_yellow, run_black, run_orenge]
+    [
+        Color.WHITE,
+        Color.RED,
+        Color.BLUE,
+        Color.GREEN,
+        Color.YELLOW,
+        Color.BLACK,
+        Color.ORANGE,
+        Color.NONE,
+    ]
 )
 
 
@@ -61,7 +61,7 @@ def wheels_cleaning():
 
 def run_1():
     # setup
-    hub.imu.reset_heading(0)
+    chassis.setup()
     chassis.settings(500)
     left_arm.run_time(-700, 1500, wait=None)
     # mission 1
@@ -79,6 +79,9 @@ def run_1():
 
 
 def run_2():
+    # setup
+    chassis.setup()
+    #
     chassis.straight(680)
     left_arm.run_angle(-500, 250)
 
@@ -100,5 +103,4 @@ def run_2():
 
 # print(run_color.hsv())
 
-while True:
-    print(run_color.color())
+print(run_color.color())
