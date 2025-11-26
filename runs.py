@@ -86,30 +86,27 @@ def run_2():
     left_arm.run_angle(-500, 250)
 
 
-def run_none():
+def run_3():
     # setup
     chassis.settings(500)
     chassis.straight(-600)
     chassis.straight(300)
 
 
-# runs = [
-#     Run(Color.WHITE, run_1, "W"),
-#     Run(Color.YELLOW, run_2, "Y"),
-# ]
+runs = [
+    (Color.WHITE, run_1, 1),
+    (Color.YELLOW, run_2, 2),
+    (Color.NONE, run_3, 3),
+]
 
-# ran = False
-# while not ran:
-#     for run in runs:
-#         if run_color.color() == run.color:
-#             ran = True
-#             run.run()
-
-run_1()
-
-# def detect_color():
-#     if (run_color.hsv().s == run_yellow.s) and (run_color.hsv().v == run_yellow.v) and (run_color)
-
-# print(run_color.hsv())
-
-print(run_color.color())
+ran = False
+while not ran:
+    for run in runs:
+        if run_color.color() == run[0]:
+            ran = True
+            print(run[2])
+            hub.display.number(run[2])
+            hub.light.on(run[0])
+            run[1]()
+            print(run_color.color())
+            break
