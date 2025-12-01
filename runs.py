@@ -122,21 +122,22 @@ def run_4():
     # setup
     reset()
     right_arm.run_time(-500, 1000, wait=None)
-    wait(500)
     # mission 1
     chassis.straight(420)
     # 1
-    right_arm.run_angle(600, 90)
+    right_arm.run_angle(700, 100)
     right_arm.run_angle(500, -90)
     # 2
-    right_arm.run_angle(600, 90)
+    right_arm.run_angle(700, 100)
     right_arm.run_angle(500, -90)
     # 3
-    right_arm.run_angle(600, 90)
+    right_arm.run_angle(700, 100)
     right_arm.run_angle(500, -90)
     # 4
-    right_arm.run_angle(600, 90)
+    right_arm.run_angle(700, 100)
     right_arm.run_angle(500, -90)
+    # mission 2
+    straight_until_black()
 
 
 runs = [
