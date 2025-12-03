@@ -89,10 +89,12 @@ def run_1():
     right_arm.run_time(speed=700, time=1500, wait=None)
     chassis.straight(-40)
     chassis.curve(radius=-300, angle=45)
-    chassis.straight(-250)
-    right_arm.run_time(speed=-700, time=1600)
-    left_arm.run_time(speed=700, time=1000)
+    chassis.straight(-230)
+    right_arm.run_time(speed=-700, time=1000)
     # return home
+    chassis.straight(150, then=Stop.NONE)
+    chassis.curve(radius=200, angle=-90, then=Stop.NONE)
+    chassis.straight(500)
 
 
 def run_2():
