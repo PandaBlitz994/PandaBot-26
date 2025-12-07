@@ -90,11 +90,13 @@ def run_1():
     chassis.straight(-40)
     chassis.curve(radius=-300, angle=45)
     chassis.straight(-230)
-    right_arm.run_time(speed=-700, time=1000)
+    right_arm.run_time(speed=-400, time=1500)
     # return home
-    chassis.straight(150, then=Stop.NONE)
-    chassis.curve(radius=200, angle=-90, then=Stop.NONE)
-    chassis.straight(500)
+    chassis.straight(170, then=Stop.NONE)
+    chassis.curve(radius=200, angle=-80, then=Stop.NONE)
+    chassis.straight(300, then=Stop.NONE)
+    chassis.curve(radius=300, angle=45, then=Stop.NONE)
+    chassis.straight(200)
 
 
 def run_2():
@@ -136,11 +138,17 @@ def run_4():
     straight_until_black()
 
 
+def run_blueHome():
+    reset()
+    chassis.straight(2500)
+
+
 runs = [
     (Color.WHITE, run_1, 1),
     (Color.YELLOW, run_2, 2),
     (Color.NONE, run_3, 3),
     (Color.BLUE, run_4, 4),
+    (Color.BLACK, run_blueHome, 5),
 ]
 
 ran = False
