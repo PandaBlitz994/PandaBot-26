@@ -119,23 +119,30 @@ def run_3():
 def run_4():
     # setup
     reset()
-    right_arm.run_time(-500, 1000, wait=None)
+    right_arm.run_time(speed=-500, time=1000, wait=None)
+    left_arm.run_time(speed=-700, time=1000, wait=None)
+
     # mission 1
     chassis.straight(420)
     # 1
-    right_arm.run_angle(700, 100)
-    right_arm.run_angle(500, -90)
+    right_arm.run_angle(speed=800, rotation_angle=100)
+    right_arm.run_angle(speed=500, rotation_angle=-90)
     # 2
-    right_arm.run_angle(700, 100)
-    right_arm.run_angle(500, -90)
+    right_arm.run_angle(speed=800, rotation_angle=100)
+    right_arm.run_angle(speed=500, rotation_angle=-90)
     # 3
-    right_arm.run_angle(700, 100)
-    right_arm.run_angle(500, -90)
+    right_arm.run_angle(speed=800, rotation_angle=100)
+    right_arm.run_angle(speed=500, rotation_angle=-90)
     # 4
-    right_arm.run_angle(700, 100)
-    right_arm.run_angle(500, -90)
+    right_arm.run_angle(speed=800, rotation_angle=100)
+    right_arm.run_angle(speed=500, rotation_angle=-90)
     # mission 2
     straight_until_black()
+    # mission 3
+    left_arm.run_time(speed=700, time=1500)
+    # mission 4
+    chassis.turn(45)
+    chassis.straight(-300)
 
 
 def run_blueHome():
