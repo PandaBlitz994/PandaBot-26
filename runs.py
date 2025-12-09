@@ -102,10 +102,39 @@ def run_1():
 def run_2():
     # setup
     reset()
-    left_arm.run_angle(500, 80)
-    left_arm.run_angle(-500, 80)
-    right_arm.run_angle(500, 400)
-    right_arm.run_angle(-500, 450)
+    left_arm.run_time(500, 80)
+    left_arm.run_time(-500, 80)
+    right_arm.run_time(500, 400)
+    right_arm.run_time(-500, 450)
+    chassis.straight(590)
+    right_arm.run_time(-750,1500)
+    chassis.settings(1000)
+    chassis.straight(-90)
+    right_arm.run_time(750,1500)
+    chassis.turn(-15)
+    chassis.straight(250)
+    chassis.turn(-30)
+    chassis.straight(100)
+    chassis.turn(44)
+    chassis.straight(70)
+    right_arm.run_time(-750,1200)
+    chassis.straight(110)
+    chassis.straight(-130)
+    chassis.straight(110)
+    chassis.straight(-130)
+    chassis.straight(110)
+    chassis.straight(-130)
+    chassis.straight(110)
+    chassis.straight(-120)
+    right_arm.run_time(750,1200)
+    chassis.turn(-25)
+    right_arm.run_time(-750,800)
+    chassis.straight(40)
+    chassis.turn(23)
+
+
+
+
 
 
 def run_3():
