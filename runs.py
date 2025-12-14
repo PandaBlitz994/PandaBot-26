@@ -117,7 +117,7 @@ def run_2():
     right_arm.run_time(-750, 1500)
     chassis.straight(-90)
     right_arm.run_time(750, 1500)
-    chassis.turn(-15)
+    #chassis.turn(-15)
     chassis.straight(250)
     chassis.straight(-50.67)
     chassis.turn(-30)
@@ -132,11 +132,23 @@ def run_2():
     right_arm.run_time(750, 1200)
     chassis.turn(-25)
     right_arm.run_time(-790, 800)
-    chassis.straight(40)
-    # moving
-    chassis.turn(23)
-    chassis.straight(173)
-    right_arm.run_time(-790, 800)
+    chassis.straight(90)
+    chassis.turn(20)
+    chassis.straight(100)
+    left_arm.run_time(-1000,1000)
+    left_arm.run_time(1000,1000)
+    right_arm.run_time(750,800)
+    right_arm.run_time(-750,1200)
+
+
+      
+      
+       # moving
+    #chassis.turn(26)
+    #right_arm.run_time(-790, 800)
+    #chassis.straight(20)
+    #right_arm.run_time(790, 800)
+    
 
 
 def run_3():
