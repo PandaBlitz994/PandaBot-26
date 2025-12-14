@@ -1,6 +1,6 @@
-HUB_NAME = "PandaBoi"
+HUB_NAME = "Pandaboy"
 
-import os
+import os 
 import subprocess
 
 target = os.getenv("TARGET")
