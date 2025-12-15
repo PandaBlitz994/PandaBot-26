@@ -168,17 +168,14 @@ def run_4():
     # mission 1
     chassis.straight(420)
     # 1
-    right_arm.run_angle(speed=800, rotation_angle=150)
-    right_arm.run_angle(speed=500, rotation_angle=-150)
+    right_arm.run_time(speed=800, time=1000)
+    right_arm.run_time(speed=-800, time=900)
     # 2
-    right_arm.run_angle(speed=800, rotation_angle=150)
-    right_arm.run_angle(speed=500, rotation_angle=-150)
+    right_arm.run_time(speed=800, time=1000)
+    right_arm.run_time(speed=-800, time=900)
     # 3
-    right_arm.run_angle(speed=800, rotation_angle=150)
-    right_arm.run_angle(speed=500, rotation_angle=-150)
-    # 4
-    right_arm.run_angle(speed=800, rotation_angle=150)
-    right_arm.run_angle(speed=500, rotation_angle=-150)
+    right_arm.run_time(speed=800, time=1000)
+    right_arm.run_time(speed=-800, time=900)
     # mission 2
     straight_until_black()
     # mission 3
