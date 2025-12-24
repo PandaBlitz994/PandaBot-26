@@ -27,8 +27,6 @@ def d_settings():
 def reset():
     hub.imu.reset_heading(0)
     d_settings()
-
-
 reset()
 
 
@@ -185,17 +183,12 @@ def run_4():
     chassis.straight(-120)
 
 
-def run_blueHome():
-    reset()
-    chassis.straight(2500)
-
-
 runs = [
     (Color.WHITE, run_1, 1),
     (Color.YELLOW, run_2, 2),
     (Color.NONE, run_3, 3),
     (Color.BLUE, run_4, 4),
-    (Color.BLACK, run_blueHome, 5),
+    (Color.BLACK, wheels_cleaning, 5),
 ]
 
 ran = False
