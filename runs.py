@@ -155,27 +155,34 @@ def run_2():
     
 
 def run_3_4():
-    # run_3
-    # pushing vrum-vrum car
-    straight_time(-500, 1000)
-    chassis.straight(150)
-    chassis.turn(90)
+    while True:
+        pressed = hub.buttons.pressed()
+        if Button.RIGHT in pressed or  Button.LEFT in pressed or Button.BLUETOOTH in pressed:
+            break
+        
+    if Button.BLUETOOTH in pressed:
+        # run_3
+        # pushing vrum-vrum car
+        straight_time(-500, 1000)
+        chassis.straight(150)
+        chassis.use_gyro(False)
 
     # run switching
     while True:
         pressed = hub.buttons.pressed()
-        if Button.RIGHT in pressed or  Button.LEFT in pressed:
+        if Button.RIGHT in pressed or Button.LEFT in pressed:
+            chassis.use_gyro(True)
             break
 
     # run_4
     # setup
-    hub.imu.reset_heading(0)
+    reset()
     right_arm.run_time(speed=-500, time=1000, wait=None)
-    left_arm.run_time(speed=-700, time=1000, wait=None)
+    left_arm.run_time(speed=-500, time=1000)
     # mission 1
     chassis.straight(420)
     for i in range(0, 4):
-        right_arm.run_time(speed=800, time=1000)
+        right_arm.run_time(speed=500, time=1000)
         right_arm.run_time(speed=-800, time=900)
 
     # mission 2
@@ -183,8 +190,12 @@ def run_3_4():
     # mission 3
     left_arm.run_time(speed=700, time=1500)
     # mission 4
-    chassis.turn(45)
-    chassis.straight(-120)
+    left_arm.run_time(speed=-500, time=1000, wait=None)
+    chassis.turn(90)
+    chassis.straight(-250)
+    chassis.turn(-135)
+    chassis.straight(-250)
+    
 
 
 runs = [
