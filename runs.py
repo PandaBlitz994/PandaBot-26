@@ -55,6 +55,7 @@ run_color.detectable_colors(
 
 
 def wheels_cleaning():
+    chassis.use_gyro(False)
     while True:
         chassis.settings(1000, 1000)
         chassis.straight(10000)
@@ -68,19 +69,31 @@ def straight_until_black():
             break
 
 
-def right_wheel_gyro(gyro):
-    while int(hub.imu.heading()) != gyro:
-        if hub.imu.heading() > gyro:
-            right_wheel.run_angle(500, 1, wait=False)
-        elif hub.imu.heading() < -gyro:
-            right_wheel.run_angle(-500, 1, wait=False)
-        else:
+def right_wheel_gyro(speed, gyro):
+    right_wheel.run(speed)
+    while True:
+        if int(hub.imu.heading()) == gyro:
             right_wheel.stop()
+            break
 
+def left_wheel_gyro(speed, gyro):
+    left_wheel.run(speed)
+    while int(hub.imu.heading()) != gyro:
+        if hub.imu.heading() == gyro:
+            left_wheel.stop()
         
 def straight_time(speed, time):
     chassis.drive(speed, 0)
     wait(time)
+    chassis.stop
+
+def turn_to(angle):
+    start_angle = (hub.imu.heading() + 360) % 360
+    deg_to_turn = (angle - start_angle) % 360
+    if deg_to_turn >= 180:
+        chassis.turn(deg_to_turn - 360)
+    else:
+        chassis.turn(deg_to_turn)
 
 
 
@@ -116,38 +129,40 @@ def run_1():
 def run_2():
     # setup
     left_arm.run_time(speed=400, time=1000, wait=None)
-    right_arm.run_time(speed=750, time=1000, wait=None)
+    right_arm.run_until_stalled(1000)
     # mission 1
-    chassis.straight(590)
-    right_arm.run_time(speed=-1000, time=1500)
-    chassis.straight(-80)
+    chassis.straight(600)
+    chassis.settings(1000)
+    chassis.straight(150)
+    d_settings
     # mission 2
-    right_arm.run_time(speed=1000, time=1500)
-    chassis.straight(250)
-    # mission 3
-    chassis.straight(-50)
+    chassis.straight(-70)
     chassis.turn(-30)
     chassis.straight(170)
     chassis.turn(30)
-    right_arm.run_time(-1000, 1500)
+    chassis.straight(20, wait=None)
+    right_arm.run_until_stalled(-1000)
     for i in range(0, 4):
         right_wheel.run_angle(500, 70)
-        right_wheel_gyro(0)
-
-    right_arm.run_angle(1000, 1000)
-    chassis.turn(-25)
-    chassis.straight(90)
-    chassis.turn(20)
+        right_wheel_gyro(-100, 0)
+    # mission 3 
+    right_arm.run_until_stalled(1000)
+    turn_to(0)
+    right_arm.run_angle(speed=-300, rotation_angle=400, wait=None)
+    chassis.straight(150)
+    right_arm.run_until_stalled(-1000)
+    right_arm.run_angle(speed=1000, rotation_angle=200)
+    chassis.straight(70)
+    left_arm.run_time(speed=-200, time=1500)
+    right_arm.run_time(speed=1000, time=1500, wait=None)
+    left_arm.run_time(speed=700, time=2000)
+    right_arm.run_time(speed=-1000, time=1000)
+    right_arm.run_angle(speed=700, rotation_angle=300, wait=None)
     chassis.straight(200)
-    left_arm.run_time(-1000,1000)
-    left_arm.run_time(400,1000, wait=None)
-    right_arm.run_time(750,800)
-    right_arm.run_time(-750,1200)
-
-
-      
-      
-       # moving
+    # left_arm.run_time(400,1000, wait=None)
+    # right_arm.run_time(750,800)
+    # right_arm.run_time(-750,1200)
+    # moving
     #chassis.turn(26)
     #right_arm.run_time(-790, 800)
     #chassis.straight(20)
@@ -179,21 +194,31 @@ def run_3_4():
     reset()
     right_arm.run_time(speed=-500, time=1000, wait=None)
     left_arm.run_time(speed=-500, time=1000)
+    left_arm.run_angle(speed=200, rotation_angle=170, wait=None)
     # mission 1
     chassis.straight(420)
     for i in range(0, 4):
         right_arm.run_time(speed=500, time=1000)
         right_arm.run_time(speed=-800, time=900)
-
     # mission 2
     straight_until_black()
     # mission 3
-    left_arm.run_time(speed=700, time=1500)
+    left_arm.run_time(speed=1000, time=1500)
     # mission 4
+    left_arm.run_angle(speed=-1000, rotation_angle=200)
     chassis.turn(90)
-    chassis.straight(-350)
+    chassis.straight(-370)
+    left_arm.run_time(speed=-500, time=1000, wait=None)
     chassis.turn(-135)
-    chassis.straight(-250)
+    straight_time(speed=-300, time=650)
+    # mission 5
+    chassis.straight(30)
+    chassis.curve(radius=-250, angle=45)
+    right_wheel_gyro(speed=-300, gyro=0)
+    right_arm.run_time(speed=300, time=1500, wait=None)
+    chassis.straight(-300)
+    chassis.turn(-90)
+
     
 
 
