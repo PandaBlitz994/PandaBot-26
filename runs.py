@@ -129,8 +129,9 @@ def turn_to(angle, turn_speed):
 def run_1():
     # setup
     reset()
-    left_arm.run_time(-700, 1000, wait=None)
-    right_arm.run_time(-700, 1000, wait=None)
+    right_arm.run_time(-1000, 1000, wait=None)
+    left_arm.run_time(-1000, 1000)
+    left_arm.run_angle(speed=700, rotation_angle=150, wait=None)
     # mission 1
     chassis.straight(670)
     chassis.straight(-170)
@@ -263,33 +264,47 @@ def run_5():
     # setup
     reset()
     left_arm.run_time(speed=-1000, time=1000, wait=None)
-    right_arm.run_time(speed=1000, time=1000, wait=None)
+    right_arm.run_time(speed=-1000, time=1000, wait=None)
+    # getting there
+    chassis.straight(500, then=Stop.NONE)
+    chassis.curve(radius=200, angle=90)
+    chassis.straight(20)
+    chassis.turn(90)
     # mission 1
-    straight_time(speed=-200, time=1000)
+    straight_time(speed=-200, time=1500)
     chassis.use_gyro(False)
+    hub.imu.reset_heading(180)
     chassis.use_gyro(True)
+    chassis.settings(straight_speed=50)
     chassis.straight(30)
-    chassis.settings(turn_rate=100)
-    chassis.turn(-90)
-    d_settings
-    till_black(speed=200, turn_rate=0)
+    d_settings()
+    turn_to(angle=90, turn_speed=50)
+    till_black(speed=50, turn_rate=0)
     chassis.straight(20)
     left_arm.run_time(speed=500, time=1500)
     # mission 2
     chassis.straight(-120)
     chassis.turn(45)
-    chassis.straight(350)
-    chassis.turn(45)
+    chassis.straight(340)
+    chassis.settings(turn_rate=350)
+    chassis.turn(60)
+    d_settings
     left_arm.run_until_stalled(-1000)
     # mission 3
-    chassis.turn(-90)
-    chassis.straight(-30)
-    right_arm.run_time(speed=-1000, time=1000)
-    chassis.straight(70)
-    chassis.turn(-45)
+    turn_to(angle=90, turn_speed=100)
     right_arm.run_time(speed=1000, time=1000)
-    # chassis.straight(100)
-    # right_arm.run_time(speed=-1000, time=1000)
+    chassis.straight(60)
+    chassis.turn(-45)
+    right_arm.run_time(speed=-500, time=1000, wait=None)
+    chassis.settings(100)
+    chassis.straight(100)
+    wait(500)
+    d_settings()
+    # returning home
+    turn_to(angle=90, turn_speed=200)
+    chassis.straight(-250, then=Stop.NONE)
+    chassis.curve(radius=-200, angle=90)
+    chassis.straight(-600)
 
 
 
