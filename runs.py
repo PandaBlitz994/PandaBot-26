@@ -159,6 +159,52 @@ def run_1():
 def run_2():
     # setup
     reset()
+    left_arm.run_time(speed=-1000, time=1000, wait=None)
+    right_arm.run_time(speed=-1000, time=1000, wait=None)
+    # getting there
+    chassis.straight(500, then=Stop.NONE)
+    chassis.curve(radius=200, angle=90)
+    chassis.turn(90)
+    # mission 1
+    straight_time(speed=-200, time=1500)
+    chassis.use_gyro(False)
+    hub.imu.reset_heading(180)
+    chassis.use_gyro(True)
+    chassis.settings(straight_speed=50)
+    chassis.straight(30)
+    d_settings()
+    turn_to(angle=90, turn_speed=50)
+    till_black(speed=50, turn_rate=0)
+    chassis.straight(20)
+    left_arm.run_time(speed=500, time=1500)
+    # mission 2
+    chassis.straight(-120)
+    chassis.turn(45)
+    chassis.straight(340)
+    chassis.turn(60)
+    left_arm.run_until_stalled(-1000)
+    left_arm.run_angle(speed=1000, rotation_angle=50)
+    left_arm.run_until_stalled(-1000)
+    # mission 3
+    turn_to(angle=90, turn_speed=100)
+    right_arm.run_time(speed=1000, time=1000)
+    chassis.straight(60)
+    chassis.turn(-45)
+    right_arm.run_time(speed=-500, time=1000, wait=None)
+    chassis.settings(150)
+    chassis.straight(100)
+    wait(500)
+    d_settings()
+    # returning home
+    turn_to(angle=90, turn_speed=200)
+    chassis.straight(-250, then=Stop.NONE)
+    chassis.curve(radius=-200, angle=90)
+    chassis.straight(-600)
+
+
+def run_3():
+    # setup
+    reset()
     left_arm.run_time(speed=400, time=1000, wait=None)
     right_arm.run_time(speed=1000, time=1500)
     # mission 1
@@ -212,7 +258,7 @@ def run_2():
     #right_arm.run_time(790, 800)
     
 
-def run_3_4():
+def run_4_5():
     while True:
         pressed = hub.buttons.pressed()
         if Button.RIGHT in pressed or  Button.LEFT in pressed or Button.BLUETOOTH in pressed:
@@ -222,7 +268,7 @@ def run_3_4():
         # run_3
         # pushing vrum-vrum car
         straight_time(-500, 1000)
-        chassis.straight(150)
+        chassis.straight(100)
         chassis.use_gyro(False)
 
     # run switching
@@ -266,57 +312,13 @@ def run_3_4():
     chassis.curve(radius=-300, angle=30, then=Stop.NONE)
     chassis.straight(-300)
 
-def run_5():
-    # setup
-    reset()
-    left_arm.run_time(speed=-1000, time=1000, wait=None)
-    right_arm.run_time(speed=-1000, time=1000, wait=None)
-    # getting there
-    chassis.straight(500, then=Stop.NONE)
-    chassis.curve(radius=200, angle=90)
-    chassis.straight(20)
-    chassis.turn(90)
-    # mission 1
-    straight_time(speed=-200, time=1500)
-    chassis.use_gyro(False)
-    hub.imu.reset_heading(180)
-    chassis.use_gyro(True)
-    chassis.settings(straight_speed=50)
-    chassis.straight(30)
-    d_settings()
-    turn_to(angle=90, turn_speed=50)
-    till_black(speed=50, turn_rate=0)
-    chassis.straight(20)
-    left_arm.run_time(speed=500, time=1500)
-    # mission 2
-    chassis.straight(-120)
-    chassis.turn(45)
-    chassis.straight(340)
-    chassis.turn(60)
-    left_arm.run_until_stalled(-1000)
-    # mission 3
-    turn_to(angle=90, turn_speed=100)
-    right_arm.run_time(speed=1000, time=1000)
-    chassis.straight(60)
-    chassis.turn(-45)
-    right_arm.run_time(speed=-500, time=1000, wait=None)
-    chassis.settings(100)
-    chassis.straight(100)
-    wait(500)
-    d_settings()
-    # returning home
-    turn_to(angle=90, turn_speed=200)
-    chassis.straight(-250, then=Stop.NONE)
-    chassis.curve(radius=-200, angle=90)
-    chassis.straight(-600)
-
 
 
 runs = [
     (Color.WHITE, run_1, 1),
-    (Color.YELLOW, run_2, 3),
-    (Color.BLUE, run_3_4, 34),
-    (Color.GREEN, run_5, 2),
+    (Color.YELLOW, run_3, 3),
+    (Color.BLUE, run_4_5, 45),
+    (Color.GREEN, run_2, 2),
     (Color.NONE, wheels_cleaning, 0),
 ]
 
