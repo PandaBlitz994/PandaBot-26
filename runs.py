@@ -312,13 +312,24 @@ def run_4_5():
     chassis.curve(radius=-300, angle=30, then=Stop.NONE)
     chassis.straight(-300)
 
+def run_6():
+    # setup
+    reset()
+    chassis.settings(straight_acceleration=400)
+    right_arm.run_time(speed=1000, time=1000, wait=None)
+    # the juice
+    chassis.straight(600)
+    d_settings()
+    right_arm.run_time(speed=-1000, time=1000)
+    chassis.straight(-650)
 
 
 runs = [
     (Color.WHITE, run_1, 1),
+    (Color.GREEN, run_2, 2),
     (Color.YELLOW, run_3, 3),
     (Color.BLUE, run_4_5, 45),
-    (Color.GREEN, run_2, 2),
+    (Color.ORANGE, run_6, 6),
     (Color.NONE, wheels_cleaning, 0),
 ]
 
