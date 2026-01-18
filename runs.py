@@ -27,6 +27,8 @@ def d_settings():
 def reset():
     hub.imu.reset_heading(0)
     d_settings()
+
+
 reset()
 
 
@@ -39,7 +41,7 @@ Color.YELLOW = Color(h=45, s=70, v=100)
 Color.BLACK = Color(h=200, s=22, v=17)
 Color.ORANGE = Color(h=7, s=86, v=100)
 Color.NONE = Color(h=180, s=32, v=7)
-Color.MAGENTA = Color(h=240, s=100, v=100)#this is floor black not magenta
+Color.MAGENTA = Color(h=240, s=100, v=100)  # this is floor black not magenta
 
 run_color.detectable_colors(
     [
@@ -51,7 +53,7 @@ run_color.detectable_colors(
         Color.BLACK,
         Color.ORANGE,
         Color.NONE,
-        Color.MAGENTA#this is floor black not magenta
+        Color.MAGENTA,  # this is floor black not magenta
     ]
 )
 
@@ -62,11 +64,13 @@ def wheels_cleaning():
         chassis.settings(1000, 1000)
         chassis.straight(10000)
 
+
 def till_black(speed, turn_rate):
     chassis.drive(speed, turn_rate)
     while floor_color.reflection() > 11:
         print(floor_color.reflection())
     chassis.stop()
+
 
 # def straight_until_black(speed):
 #     chassis.drive(speed, 0)
@@ -109,11 +113,13 @@ def left_wheel_gyro(speed, gyro):
             if int(hub.imu.heading()) <= gyro:
                 left_wheel.stop()
                 break
-        
+
+
 def straight_time(speed, time):
     chassis.drive(speed, 0)
     wait(time)
     chassis.stop
+
 
 def turn_to(angle, turn_speed):
     chassis.settings(turn_rate=turn_speed)
@@ -125,8 +131,7 @@ def turn_to(angle, turn_speed):
         chassis.turn(deg_to_turn)
 
 
-
-def run_1():
+def white_run():
     # setup
     reset()
     right_arm.run_time(-1000, 1000, wait=None)
@@ -156,7 +161,7 @@ def run_1():
     chassis.straight(200)
 
 
-def run_2():
+def green_run():
     # setup
     reset()
     left_arm.run_time(speed=-1000, time=1000, wait=None)
@@ -202,41 +207,33 @@ def run_2():
     chassis.straight(-600)
 
 
-def run_3():
+def yellow_run():
     # setup
     reset()
     left_arm.run_time(speed=400, time=1000, wait=None)
     right_arm.run_time(speed=1000, time=1500)
-    # mission 1
+    # get on track
     chassis.straight(560)
-    # chassis.settings(1000)
-    # chassis.straight(160)
-    # d_settings
-    # mission 2
-    # chassis.straight(-70)
     chassis.turn(-30)
     chassis.straight(160)
     chassis.turn(30)
     till_black(speed=100, turn_rate=0)
+    # lift stuff
     chassis.straight(-60)
     right_arm.run_time(speed=-1000, time=1500)
-    # right_arm.run_angle(speed=1000, rotation_angle=150)  
     wait(100)
     left_wheel.hold()
-    for i in range(4):
-        right_wheel.run_angle(speed=1000 , rotation_angle=80)
+    for _ in range(4):
+        right_wheel.run_angle(speed=1000, rotation_angle=80)
         right_wheel_gyro(speed=100, gyro=0)
-        # chassis.straight(-10)
-    # mission 3_4
+    # take the tray
     right_arm.run_time(speed=1000, time=1500)
-    # right_arm.run_angle(speed=-1000, rotation_angle=150)
     turn_to(angle=0, turn_speed=50)
     chassis.straight(-30)
     wait(100)
     till_black(speed=100, turn_rate=0)
     wait(100)
     chassis.straight(100)
-    # right_arm.run_time(speed=-1000, time=2000, wait=None)
     left_arm.run_time(speed=-400, time=1500)
     left_arm.run_time(speed=400, time=2000)
     left_arm.run_time(speed=500, time=3000, wait=None)
@@ -252,20 +249,23 @@ def run_3():
     # right_arm.run_time(750,800)
     # right_arm.run_time(-750,1200)
     # moving
-    #chassis.turn(26)
-    #right_arm.run_time(-790, 800)
-    #chassis.straight(20)
-    #right_arm.run_time(790, 800)
-    
+    # chassis.turn(26)
+    # right_arm.run_time(-790, 800)
+    # chassis.straight(20)
+    # right_arm.run_time(790, 800)
 
-def run_4_5():
+
+def blue_run():
     while True:
         pressed = hub.buttons.pressed()
-        if Button.RIGHT in pressed or  Button.LEFT in pressed or Button.BLUETOOTH in pressed:
+        if (
+            Button.RIGHT in pressed
+            or Button.LEFT in pressed
+            or Button.BLUETOOTH in pressed
+        ):
             break
-        
+
     if Button.BLUETOOTH in pressed:
-        # run_3
         # pushing vrum-vrum car
         straight_time(-500, 1000)
         chassis.straight(100)
@@ -312,7 +312,8 @@ def run_4_5():
     chassis.curve(radius=-300, angle=30, then=Stop.NONE)
     chassis.straight(-300)
 
-def run_6():
+
+def orange_run():
     # setup
     reset()
     chassis.settings(straight_acceleration=400)
@@ -325,11 +326,11 @@ def run_6():
 
 
 runs = [
-    (Color.WHITE, run_1, 1),
-    (Color.GREEN, run_2, 2),
-    (Color.YELLOW, run_3, 3),
-    (Color.BLUE, run_4_5, 45),
-    (Color.ORANGE, run_6, 6),
+    (Color.WHITE, white_run, 1),
+    (Color.GREEN, green_run, 2),
+    (Color.YELLOW, yellow_run, 3),
+    (Color.BLUE, blue_run, 45),
+    (Color.ORANGE, orange_run, 6),
     (Color.NONE, wheels_cleaning, 0),
 ]
 
