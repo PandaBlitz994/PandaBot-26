@@ -102,17 +102,15 @@ def left_wheel_gyro(speed, gyro):
     current_gyro = int(hub.imu.heading())
     if current_gyro <= gyro:
         left_wheel.run(speed)
-        while True:
-            if int(hub.imu.heading()) >= gyro:
-                left_wheel.stop()
-                break
+        while int(hub.imu.heading()) < gyro: 
+            pass
+        left_wheel.stop()
 
     elif current_gyro > gyro:
         left_wheel.run(-speed)
-        while True:
-            if int(hub.imu.heading()) <= gyro:
-                left_wheel.stop()
-                break
+        while int(hub.imu.heading()) > gyro:
+            pass
+        left_wheel.stop()
 
 
 def straight_time(speed, time):
@@ -317,11 +315,12 @@ def orange_run():
     # setup
     reset()
     chassis.settings(straight_acceleration=400)
-    right_arm.run_time(speed=1000, time=1000, wait=None)
+    right_arm.run_time(speed=-500, time=1000)
     # the juice
     chassis.straight(600)
     d_settings()
-    right_arm.run_time(speed=-1000, time=1000)
+    right_arm.run_time(speed=500, time=1000)
+    right_arm.run_time(speed=-500, time=1000)
     chassis.straight(-650)
 
 
