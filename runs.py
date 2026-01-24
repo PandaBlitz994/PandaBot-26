@@ -64,13 +64,16 @@ def wheels_cleaning():
         chassis.settings(1000, 1000)
         chassis.straight(10000)
 
+def breakpoint():
+    while not Button.BLUETOOTH in hub.buttons.pressed():
+        pass
+    wait(250)
 
 def till_black(speed, turn_rate):
     chassis.drive(speed, turn_rate)
     while floor_color.reflection() > 11:
         print(floor_color.reflection())
     chassis.stop()
-
 
 # def straight_until_black(speed):
 #     chassis.drive(speed, 0)
@@ -114,9 +117,12 @@ def left_wheel_gyro(speed, gyro):
 
 
 def straight_time(speed, time):
+    """speed: Number, mm/s
+    time: Number, ms
+    """
     chassis.drive(speed, 0)
     wait(time)
-    chassis.stop
+    chassis.stop()
 
 
 def turn_to(angle, turn_speed):
@@ -282,45 +288,36 @@ def blue_run():
     right_arm.run_time(speed=-500, time=1000, wait=None)
     left_arm.run_time(speed=-500, time=1000)
     left_arm.run_angle(speed=200, rotation_angle=170, wait=None)
-    # mission 1
+    # mission 1 - mamgora
     chassis.straight(420)
     for i in range(4):
         right_arm.run_time(speed=500, time=1000)
         right_arm.run_time(speed=-800, time=900)
-    # mission 2
-    till_black(speed=200, turn_rate=0)
-    # mission 3
+    # mission 2 - napachia
+    # till_black(speed=200, turn_rate=0)
+    straight_time(speed=200, time=2500)
+    # mission 3 - who lived here?
     left_arm.run_time(speed=1000, time=1500)
-    # mission 4
     left_arm.run_time(speed=-1000, time=1000)
-    chassis.turn(90)
-    chassis.straight(-420)
-    left_arm.run_time(speed=-500, time=1000, wait=None)
-    chassis.turn(-135)
-    straight_time(speed=-300, time=650)
-    # returning home
-    chassis.straight(30)
-    chassis.curve(radius=-250, angle=45, then=Stop.NONE)
-    chassis.straight(-30)
-    chassis.turn(90)
-    chassis.straight(-400, then=Stop.NONE)
-    # right_wheel_gyro(speed=-300, gyro=0)
-    # right_arm.run_time(speed=300, time=1500, wait=None)
-    # chassis.straight(-300)
-    chassis.curve(radius=-300, angle=30, then=Stop.NONE)
-    chassis.straight(-300)
-
+    # back home
+    chassis.settings(straight_speed=-1000)
+    chassis.straight(-1000)
+    
 
 def orange_run():
     # setup
     reset()
-    chassis.settings(straight_acceleration=400)
-    right_arm.run_time(speed=-500, time=1000)
+    # chassis.settings(straight_acceleration=400)
+    left_arm.run_time(speed=1000, time=500)
     # the juice
-    chassis.straight(600)
-    d_settings()
-    right_arm.run_time(speed=500, time=1000)
-    right_arm.run_time(speed=-500, time=1000)
+    chassis.straight(650)
+    chassis.straight(-50)
+    left_arm.run_time(speed=-1000, time=2500)
+    chassis.straight(50)
+    left_arm.run_time(speed=-1000, time=500)
+    right_arm.run_time(speed=-1000, time=5000)
+    chassis.straight(-50)
+    left_arm.run_time(speed=1000, time=3800)
     chassis.straight(-650)
 
 
