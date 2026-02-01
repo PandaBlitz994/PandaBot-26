@@ -236,16 +236,17 @@ def yellow_run():
     chassis.turn(45)
     # discovering what's on sale
     right_arm.run_time(speed=-1000, time=1000, wait=None)
-    chassis.straight(300)
+    chassis.straight(240)
     left_arm.run_until_stalled(500)
-    chassis.straight(-30)
     right_arm.run_time(speed=1000, time=2000)
     chassis.straight(-200)
     left_arm.run_time(speed=-500, time=1000, wait=None)
     chassis.straight(80)
     left_arm.run_until_stalled(-1000)
-    chassis.straight(-400)
-
+    # returning home
+    chassis.straight(-150, then=Stop.NONE)
+    chassis.curve(radius=-300, angle=-45, then=Stop.NONE)
+    chassis.straight(-200)
 
 def blue_run():
     while True:
@@ -308,6 +309,12 @@ def orange_run():
     left_arm.run_time(speed=1000, time=3800)
     chassis.straight(-650)
 
+
+# while True:
+#     pressed = ""
+#     pressed = hub.buttons.pressed()
+#     if Button.RIGHT in pressed:
+#         print(run_color.color())
 
 runs = [
     (Color.WHITE, white_run, 1),
