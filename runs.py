@@ -21,7 +21,7 @@ chassis.use_gyro(True)
 
 # default:
 def d_settings():
-    chassis.settings(500, 500, 150, 750)
+    chassis.settings(straight_speed=500, straight_acceleration=500, turn_rate=150, turn_acceleration=750)
 
 
 def reset():
@@ -237,16 +237,19 @@ def yellow_run():
     # discovering what's on sale
     right_arm.run_time(speed=-1000, time=1000, wait=None)
     chassis.straight(240)
+    right_arm.run_time(speed=1000, time=2000, wait=None)
     left_arm.run_until_stalled(500)
-    right_arm.run_time(speed=1000, time=2000)
     chassis.straight(-200)
     left_arm.run_time(speed=-500, time=1000, wait=None)
     chassis.straight(80)
     left_arm.run_until_stalled(-1000)
-    # returning home
-    chassis.straight(-150, then=Stop.NONE)
-    chassis.curve(radius=-300, angle=-45, then=Stop.NONE)
-    chassis.straight(-200)
+    # returning home and pushing vrum-vrum
+    left_wheel_gyro(speed=100, gyro=90)
+    straight_time(speed=-500, time=2500)
+    right_arm.run_time(speed=-1000, time=2000, wait=None)
+    right_wheel_gyro(speed=500, gyro=50)
+    straight_time(speed=-500, time=2000)
+    chassis.straight(30)
 
 def blue_run():
     while True:
