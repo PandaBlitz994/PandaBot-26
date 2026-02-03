@@ -35,11 +35,11 @@ reset()
 # reflection color
 Color.WHITE = Color(h=0, s=0, v=100)
 Color.RED = Color(h=352, s=92, v=75)
-Color.BLUE = Color(h=217, s=94, v=70)
+Color.BLUE = Color(h=218, s=94, v=72)
 Color.GREEN = Color(h=96, s=67, v=88)
-Color.YELLOW = Color(h=45, s=70, v=100)
-Color.BLACK = Color(h=200, s=22, v=17)
-Color.ORANGE = Color(h=7, s=86, v=100)
+Color.YELLOW = Color(h=40, s=70, v=100)
+Color.BLACK = Color(h=200, s=20, v=19)
+Color.ORANGE = Color(h=7, s=86, v=99) 
 Color.NONE = Color(h=180, s=32, v=7)
 Color.MAGENTA = Color(h=240, s=100, v=100)  # this is floor black not magenta
 
@@ -299,17 +299,16 @@ def blue_run():
 def orange_run():
     # setup
     reset()
-    # chassis.settings(straight_acceleration=400)
-    left_arm.run_time(speed=1000, time=500)
     # the juice
     chassis.straight(650)
-    chassis.straight(-50)
-    left_arm.run_time(speed=-1000, time=2500)
-    chassis.straight(50)
-    left_arm.run_time(speed=-1000, time=500)
-    right_arm.run_time(speed=-1000, time=5000)
-    chassis.straight(-50)
-    left_arm.run_time(speed=1000, time=3800)
+    chassis.straight(-30)
+    left_arm.run_time(speed=1000, time=1600)
+    right_arm.run(-1000)
+    straight_time(speed=500, time=1000)
+    wait(2000)
+    # returning home
+    left_arm.run_time(speed=-1000, time=2000, wait=None)
+    # wait(500)
     chassis.straight(-650)
 
 
@@ -317,7 +316,7 @@ def orange_run():
 #     pressed = ""
 #     pressed = hub.buttons.pressed()
 #     if Button.RIGHT in pressed:
-#         print(run_color.color())
+#         print(run_color.hsv())
 
 runs = [
     (Color.WHITE, white_run, 1),
