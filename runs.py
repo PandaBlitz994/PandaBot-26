@@ -250,6 +250,7 @@ def yellow_run():
     right_wheel_gyro(speed=500, gyro=50)
     straight_time(speed=-500, time=2000)
     chassis.straight(30)
+    chassis.straight(-200)
 
 def blue_run():
     while True:
@@ -302,8 +303,9 @@ def orange_run():
     # the juice
     chassis.straight(650)
     chassis.straight(-30)
+    right_arm.run(-700)
     left_arm.run_time(speed=1000, time=1600)
-    right_arm.run(-1000)
+    left_arm.run_time(speed=1000, time=1000, wait=None)
     straight_time(speed=500, time=1000)
     wait(2000)
     # returning home
