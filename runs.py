@@ -18,14 +18,22 @@ floor_color_sensor = ColorSensor(Port.C)  # Green cable
 chassis = DriveBase(left_wheel, right_wheel, 62.4, 81)
 chassis.use_gyro(True)
 
+
 def reset_drive_settings():
     """resets to the default speed, acceleration and turn rate"""
-    chassis.settings(straight_speed=500, straight_acceleration=500, turn_rate=150, turn_acceleration=750)
+    chassis.settings(
+        straight_speed=500,
+        straight_acceleration=500,
+        turn_rate=150,
+        turn_acceleration=750,
+    )
+
 
 def reset():
     """restets the gyro angle, drive settings"""
     hub.imu.reset_heading(0)
     reset_drive_settings()
+
 
 # reflection color
 WHITE = Color(h=0, s=0, v=100)
@@ -34,7 +42,7 @@ BLUE = Color(h=218, s=94, v=72)
 GREEN = Color(h=96, s=67, v=88)
 YELLOW = Color(h=40, s=70, v=100)
 BLACK = Color(h=200, s=20, v=19)
-ORANGE = Color(h=7, s=86, v=99) 
+ORANGE = Color(h=7, s=86, v=99)
 NO_COLOR = Color(h=180, s=32, v=7)
 FLOOR_BLACK = Color(h=240, s=100, v=100)
 
@@ -53,11 +61,18 @@ run_color_sensor.detectable_colors(
 )
 
 
+def check_battery_percent():
+    v = hub.battery.voltage()  # Read battery voltage (mV)
+    percent = int((v - 7000) * 100 // 1200)  # Convert voltage to percentage
+    return percent
+
+
 def wheels_cleaning():
     chassis.use_gyro(False)
+    chassis.drive(speed=1000, turn_rate=0)
     while True:
-        chassis.settings(1000, 1000)
-        chassis.straight(10000)
+        hub.display.number(check_battery_percent())
+        wait(500)
 
 
 def breakpoint():
@@ -104,6 +119,7 @@ def left_wheel_gyro(speed, gyro):
             pass
         left_wheel.stop()
 
+
 def straight_time(speed, time):
     """speed: Number, mm/s
     time: Number, ms
@@ -133,19 +149,19 @@ def white_run():
     chassis.straight(670)
     chassis.straight(-170)
     chassis.straight(75)
-    left_arm.run_time(700, 1500)# pulling the brush
+    left_arm.run_time(700, 1500)  # pulling the brush
     # going to MO2
     chassis.turn(30)
     chassis.straight(170)
     chassis.turn(-75)
-    chassis.straight(200)#revealing the map
+    chassis.straight(200)  # revealing the map
     # going to MO3
     right_arm.run_time(speed=700, time=1000, wait=None)
     chassis.straight(-40)
     chassis.curve(radius=-300, angle=45)
     chassis.straight(-230)
-    left_arm.run_time(-1000, 1000, wait=None)#relesing the brush
-    right_arm.run_time(-700, 1000)#doing the mission
+    left_arm.run_time(-1000, 1000, wait=None)  # relesing the brush
+    right_arm.run_time(-700, 1000)  # doing the mission
     # return home
     chassis.straight(170, then=Stop.NONE)
     chassis.curve(radius=200, angle=-80, then=Stop.NONE)
@@ -235,7 +251,7 @@ def yellow_run():
     right_wheel_gyro(speed=500, gyro=50)
     straight_time(speed=-500, time=2000)
     chassis.straight(30)
-    chassis.straight(-200)
+
 
 def blue_run():
     # waiting for a button press
@@ -250,7 +266,7 @@ def blue_run():
         chassis.straight(100)
         chassis.use_gyro(False)
 
-    else: 
+    else:
         # setup
         reset()
         right_arm.run_time(speed=-500, time=1000, wait=None)
@@ -276,9 +292,8 @@ def orange_run():
     # the juice
     chassis.straight(650)
     chassis.straight(-30)
-    right_arm.run(-700)
     left_arm.run_time(speed=1000, time=1600)
-    left_arm.run_time(speed=1000, time=1000, wait=None)
+    right_arm.run(-1000)
     straight_time(speed=500, time=1000)
     wait(2000)
     # returning home
@@ -295,14 +310,15 @@ runs = [
     (YELLOW, yellow_run, 4),
     (BLUE, blue_run, 56),
     (NO_COLOR, wheels_cleaning, 0),
-] # for each run: attachment color, run function, run number (for display)
+]  # for each run: attachment color, run function, run number (for display)
 
 finished = False
 while not finished:
     for run in runs:
-        if run_color_sensor.color() == run[0]: 
+        if run_color_sensor.color() == run[0]:
             finished = True
-            hub.display.number(run[2]) # Display run number on the matrix (screen)
+            hub.display.number(run[2])  # Display run number on the matrix (screen)
             hub.light.on(run[0])  # Change the button light color to the run color
-            run[1]() # Run the run funciton
+            print("BAT_percent:", f"{check_battery_percent()}%")
+            run[1]()  # Run the run funciton
             break
