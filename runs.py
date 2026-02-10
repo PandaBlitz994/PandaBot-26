@@ -83,7 +83,7 @@ def breakpoint():
 
 def drive_untill_black(speed, turn_rate):
     chassis.drive(speed, turn_rate)
-    while floor_color_sensor.reflection() > 11:
+    while floor_color_sensor.reflection() > 13:
         print(floor_color_sensor.reflection())
     chassis.stop()
 
@@ -237,7 +237,7 @@ def yellow_run():
     chassis.turn(45)
     # discovering what's on sale
     right_arm.run_time(speed=-1000, time=1000, wait=None)
-    chassis.straight(240)
+    chassis.straight(220)
     right_arm.run_time(speed=1000, time=2000, wait=None)
     left_arm.run_until_stalled(500)
     chassis.straight(-200)
@@ -290,18 +290,18 @@ def blue_run():
 def orange_run():
     reset()
     # the juice
-    chassis.straight(650)
+    straight_time(speed=500, time=2500)
     chassis.straight(-30)
-    left_arm.run_time(speed=1000, time=1600)
     right_arm.run(-1000)
+    left_arm.run_time(speed=1000, time=2000)
+    left_arm.run_time(speed=1000, time=1500, wait=None)
     straight_time(speed=500, time=1000)
     wait(2000)
     # returning home
     left_arm.run_time(speed=-1000, time=2000, wait=None)
+    # wait(500)
     chassis.straight(-650)
 
-
-reset()
 
 runs = [
     (WHITE, white_run, 1),
