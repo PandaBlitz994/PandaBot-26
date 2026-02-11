@@ -237,7 +237,7 @@ def yellow_run():
     chassis.turn(45)
     # discovering what's on sale
     right_arm.run_time(speed=-1000, time=1000, wait=None)
-    chassis.straight(220)
+    chassis.straight(240)
     right_arm.run_time(speed=1000, time=2000, wait=None)
     left_arm.run_until_stalled(500)
     chassis.straight(-200)
