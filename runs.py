@@ -302,6 +302,16 @@ def orange_run():
     # wait(500)
     chassis.straight(-650)
 
+def run_none():
+    while True:
+        pressed = hub.buttons.pressed()
+        if pressed:
+            break
+
+    if Button.BLUETOOTH in pressed:
+        chassis.straight(650)
+    else:
+        wheels_cleaning()
 
 runs = [
     (WHITE, white_run, 1),
@@ -309,7 +319,7 @@ runs = [
     (ORANGE, orange_run, 3),
     (YELLOW, yellow_run, 4),
     (BLUE, blue_run, 56),
-    (NO_COLOR, wheels_cleaning, 0),
+    (NO_COLOR, run_none, 0),
 ]  # for each run: attachment color, run function, run number (for display)
 
 finished = False
