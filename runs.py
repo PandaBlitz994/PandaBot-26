@@ -228,29 +228,34 @@ def yellow_run():
     reset_drive_settings()
     drive_untill_black(speed=-100, turn_rate=0)
     right_arm.run_time(speed=1000, time=500, wait=None)
-    chassis.straight(-280)
+    chassis.straight(-270)
     # tiping the scales
     right_arm.run_time(speed=-1000, time=2000)
     right_arm.run_time(speed=1000, time=2000)
     # driving to what's on sale
-    chassis.straight(-400)
+    chassis.straight(-410)
     chassis.turn(45)
     # discovering what's on sale
     right_arm.run_time(speed=-1000, time=1000, wait=None)
+    chassis.settings(300)
     chassis.straight(240)
-    right_arm.run_time(speed=1000, time=2000, wait=None)
+    right_arm.run_time(speed=1000, time=3000, wait=None)
     left_arm.run_until_stalled(500)
+    chassis.settings(100)
+    chassis.straight(-30, then=Stop.NONE)
+    reset_drive_settings()
     chassis.straight(-200)
-    left_arm.run_time(speed=-500, time=1000, wait=None)
     chassis.straight(80)
-    left_arm.run_until_stalled(-1000)
+    left_arm.run_time(speed=-1000, time=2000, wait=None)
     # returning home and pushing vrum-vrum
-    left_wheel_gyro(speed=100, gyro=90)
+    turn_to(angle=90, turn_speed=150)
     straight_time(speed=-500, time=2500)
     right_arm.run_time(speed=-1000, time=2000, wait=None)
     right_wheel_gyro(speed=500, gyro=50)
     straight_time(speed=-500, time=2000)
     chassis.straight(30)
+    right_arm.run_time(speed=1000, time=2000, wait=None)
+    right_wheel.run_angle(speed=-500, rotation_angle=500)
 
 
 def blue_run():
