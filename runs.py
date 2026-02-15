@@ -142,7 +142,7 @@ def turn_to(angle, turn_speed):
 def white_run():
     # setup
     reset()
-    right_arm.run_time(-1000, 1000, wait=None)
+    right_arm.run_time(-1000, 2000, wait=None)
     left_arm.run_time(-1000, 1000)
     left_arm.run_angle(speed=700, rotation_angle=150, wait=None)
     # going to the brush
@@ -152,18 +152,18 @@ def white_run():
     left_arm.run_time(700, 1500)  # pulling the brush
     # going to MO2
     chassis.turn(30)
-    chassis.straight(170)
+    chassis.straight(160)
     chassis.turn(-75)
-    chassis.straight(200)  # revealing the map
+    straight_time(speed=600, time=2000)  # revealing the map
     # going to MO3
-    right_arm.run_time(speed=700, time=1000, wait=None)
-    chassis.straight(-40)
-    chassis.curve(radius=-300, angle=45)
+    right_arm.run_time(speed=1000, time=2000, wait=None)
+    chassis.straight(-40, then=Stop.NONE)
+    chassis.curve(radius=-250, angle=45)
     chassis.straight(-230)
     left_arm.run_time(-1000, 1000, wait=None)  # relesing the brush
-    right_arm.run_time(-700, 1000)  # doing the mission
+    right_arm.run_time(speed=-2500, time=3000)  # doing the mission
     # return home
-    chassis.straight(170, then=Stop.NONE)
+    chassis.straight(150, then=Stop.NONE)
     chassis.curve(radius=200, angle=-80, then=Stop.NONE)
     chassis.straight(300, then=Stop.NONE)
     chassis.curve(radius=300, angle=45, then=Stop.NONE)
@@ -302,6 +302,7 @@ def orange_run():
     # wait(500)
     chassis.straight(-650)
 
+
 def run_none():
     while True:
         pressed = hub.buttons.pressed()
@@ -312,6 +313,7 @@ def run_none():
         chassis.straight(650)
     else:
         wheels_cleaning()
+
 
 runs = [
     (WHITE, white_run, 1),
