@@ -295,8 +295,7 @@ def blue_run():
 def orange_run():
     reset()
     # the juice
-    straight_time(speed=500, time=2500)
-    chassis.straight(-30)
+    straight_time(speed=300, time=2100)
     right_arm.run(-1000)
     left_arm.run_time(speed=1000, time=2000)
     left_arm.run_time(speed=1000, time=1500, wait=None)
@@ -305,7 +304,7 @@ def orange_run():
     # returning home
     left_arm.run_time(speed=-1000, time=2000, wait=None)
     # wait(500)
-    chassis.straight(-650)
+    chassis.straight(-600)
 
 
 def run_none():
