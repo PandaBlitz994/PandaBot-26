@@ -282,11 +282,11 @@ def blue_run():
             right_arm.run_time(speed=500, time=1000)
             right_arm.run_time(speed=-800, time=900)
         # mission 2 - napachia
-        straight_time(speed=150, time=2500)
+        straight_time(speed=250, time=2500)
         # mission 3 - who lived here?
-        left_arm.run_time(speed=1000, time=1500)
-        left_arm.run_time(speed=-1000, time=1000)
-        chassis.straight(-110)
+        left_arm.run_time(speed=1200, time=1500)
+        left_arm.run_time(speed=-1200, time=1000)
+        chassis.straight(-80)
         turn_to(-90)
         chassis.straight(-230)
         # chassis.straight(200, then=Stop.NONE)
@@ -298,15 +298,16 @@ def blue_run():
 
 
 def orange_run():
+    # setup
     reset()
     # the juice
     straight_time(speed=500, time=2500)
     chassis.straight(-30)
+    left_arm.run_time(speed=1000, time=1600)
+    left_arm.run_time(speed=300, time=3000, wait=None)
     right_arm.run(-1000)
-    left_arm.run_time(speed=1000, time=2000)
-    left_arm.run_time(speed=1000, time=1500, wait=None)
-    straight_time(speed=500, time=1000)
-    wait(2000)
+    straight_time(speed=300, time=3000)
+    # wait(2000)
     # returning home
     left_arm.run_time(speed=-1000, time=2000, wait=None)
     # wait(500)
