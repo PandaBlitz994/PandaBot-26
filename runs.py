@@ -303,9 +303,9 @@ def orange_run():
     # the juice
     straight_time(speed=500, time=2500)
     chassis.straight(-30)
-    left_arm.run_time(speed=1000, time=1600)
-    left_arm.run_time(speed=300, time=3000, wait=None)
     right_arm.run(-1000)
+    left_arm.run_time(speed=1000, time=1600)
+    left_arm.run_time(speed=500, time=1500, wait=None)
     straight_time(speed=300, time=3000)
     # wait(2000)
     # returning home
