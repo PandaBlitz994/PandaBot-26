@@ -129,8 +129,7 @@ def straight_time(speed, time):
     chassis.stop()
 
 
-def turn_to(angle, turn_speed):
-    chassis.settings(turn_rate=turn_speed)
+def turn_to(angle):
     start_angle = (hub.imu.heading() + 360) % 360
     deg_to_turn = (angle - start_angle) % 360
     if deg_to_turn >= 180:
@@ -198,7 +197,7 @@ def black_run():
     chassis.turn(60)
     left_arm.run_until_stalled(1000)
     # whale
-    turn_to(angle=90, turn_speed=100)
+    turn_to(90)
     chassis.straight(130)
     right_arm.run_time(speed=-1000, time=1000)
     chassis.straight(30)
@@ -248,7 +247,7 @@ def yellow_run():
     chassis.straight(80)
     left_arm.run_time(speed=-1000, time=2000, wait=None)
     # returning home and pushing vrum-vrum
-    turn_to(angle=90, turn_speed=150)
+    turn_to(90)
     straight_time(speed=-500, time=2500)
     right_arm.run_time(speed=-1000, time=2000, wait=None)
     right_wheel_gyro(speed=500, gyro=50)
@@ -288,10 +287,11 @@ def blue_run():
         left_arm.run_time(speed=1000, time=1500)
         left_arm.run_time(speed=-1000, time=1000)
         chassis.straight(-110)
-        chassis.turn(-95)
+        turn_to(-90)
         chassis.straight(-230)
-        chassis.straight(300)
-
+        # chassis.straight(200, then=Stop.NONE)
+        chassis.curve(radius=150, angle=-90, then=Stop.NONE)
+        chassis.straight(600)
         # back home
         # chassis.settings(straight_speed=-1000)
     # chassis.straight(-1000)
