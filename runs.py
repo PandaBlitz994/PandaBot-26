@@ -124,9 +124,11 @@ def straight_time(speed, time):
     """speed: Number, mm/s
     time: Number, ms
     """
+    chassis.use_gyro(False)
     chassis.drive(speed, 0)
     wait(time)
     chassis.stop()
+    chassis.use_gyro(True)
 
 
 def turn_to(angle):
@@ -172,47 +174,25 @@ def white_run():
 def black_run():
     # setup
     reset()
-    right_arm.run_time(speed=1000, time=1000, wait=None)
-    left_arm.run_time(speed=-1000, time=1000, wait=None)
+    chassis.settings(straight_acceleration=1000)
+    left_arm.run_time(speed=1000, time=1000, wait=None)  # reseting elevator
+    right_arm.run_time(speed=1000, time=1000, wait=None)  # reseting the other arm
     # getting there
     chassis.straight(500, then=Stop.NONE)
-    chassis.curve(radius=200, angle=90)
-    chassis.turn(90)
-    # straiting on the wall
-    straight_time(speed=-200, time=1500)
-    chassis.use_gyro(False)
-    hub.imu.reset_heading(180)
-    chassis.use_gyro(True)
-    # taking the trasure out
-    chassis.straight(30)
-    chassis.turn(-90)
-    chassis.straight(70)
-    left_arm.run_time(speed=1000, time=1000)
-    chassis.straight(70)
-    left_arm.run_time(speed=-1000, time=1000)
-    # going to the whale and droping the tresure
-    chassis.straight(-120)
-    chassis.turn(45)
-    chassis.straight(280)
-    chassis.turn(60)
-    left_arm.run_until_stalled(1000)
-    # whale
-    turn_to(90)
-    chassis.straight(130)
-    right_arm.run_time(speed=-1000, time=1000)
-    chassis.straight(30)
-    left_wheel_gyro(speed=200, gyro=45)
-    # lifting it
-    right_arm.run_time(speed=1000, time=1000)
-    right_arm.run_time(speed=1000, time=4000, wait=None)
-    chassis.straight(-80)
-    chassis.straight(80)
-    wait(200)
-    # reterning home
-    left_wheel_gyro(speed=200, gyro=90)
-    chassis.straight(-250, then=Stop.NONE)
-    chassis.curve(radius=-200, angle=90)
-    chassis.straight(-600)
+    chassis.curve(radius=450, angle=45)
+    right_arm.run_time(speed=-500, time=1000, wait=None)  # lowering the arm
+    right_wheel_gyro(speed=150, gyro=0)
+    straight_time(speed=500, time=1000)  # making shure we are at the right place
+    # doing the missions
+    right_arm.run_time(speed=200, time=4500, wait=None)  # transferring the minecart
+    left_arm.run_time(speed=-500, time=2000)
+    left_arm.run_time(speed=300, time=2500)  # collecting the high vlue item
+    # returning home
+    chassis.straight(-50, then=Stop.NONE)
+    chassis.curve(radius=-100, angle=-45)
+    chassis.curve(radius=-300, angle=45, then=Stop.NONE)
+    chassis.curve(radius=-300, angle=-70, then=Stop.NONE)
+    chassis.straight(-200)
 
 
 def yellow_run():
