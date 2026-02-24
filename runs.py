@@ -143,8 +143,8 @@ def turn_to(angle):
 def white_run():
     # setup
     reset()
-    right_arm.run_time(-1000, 2000, wait=None)
-    left_arm.run_time(-1000, 1000)
+    right_arm.run_time(speed=1000, time=1000, wait=None)  # making shure the arm is down
+    left_arm.run_time(speed=-1000, time=1000)  # resting dual axis arm
     left_arm.run_angle(speed=700, rotation_angle=150, wait=None)
     # going to the brush
     chassis.straight(670)
@@ -156,19 +156,13 @@ def white_run():
     chassis.straight(160)
     chassis.turn(-75)
     straight_time(speed=600, time=2000)  # revealing the map
-    # going to MO3
-    right_arm.run_time(speed=1000, time=2000, wait=None)
-    chassis.straight(-40, then=Stop.NONE)
-    chassis.curve(radius=-250, angle=45)
-    chassis.straight(-230)
-    left_arm.run_time(-1000, 1000, wait=None)  # relesing the brush
-    right_arm.run_time(speed=-2500, time=3000)  # doing the mission
-    # return home
-    chassis.straight(150, then=Stop.NONE)
-    chassis.curve(radius=200, angle=-80, then=Stop.NONE)
-    chassis.straight(300, then=Stop.NONE)
-    chassis.curve(radius=300, angle=45, then=Stop.NONE)
-    chassis.straight(200)
+    # returning home and placing a flag
+    chassis.straight(-100)
+    turn_to(0)
+    right_arm.run_time(speed=-1000, time=2000, wait=None)  # placing the flag
+    wait(500)
+    chassis.straight(-500, then=Stop.NONE)
+    chassis.curve(radius=-300, angle=-45)
 
 
 def black_run():
