@@ -181,15 +181,15 @@ def black_run():
     reset()
     chassis.settings(straight_acceleration=1000)
     left_arm.run_time(speed=1000, time=1000, wait=None)  # reseting elevator
-    right_arm.run_time(speed=1000, time=1000, wait=None)  # reseting the other arm
+    right_arm.run_time(speed=-1000, time=1000, wait=None)  # reseting the other arm
     # getting there
     chassis.straight(500, then=Stop.NONE)
     chassis.curve(radius=450, angle=45)
-    right_arm.run_time(speed=-500, time=1000, wait=None)  # lowering the arm
+    right_arm.run_time(speed=1000, time=1000, wait=None)  # lowering the arm
     right_wheel_gyro(speed=150, gyro=0)
     straight_time(speed=500, time=1000)  # making shure we are at the right place
     # doing the missions
-    right_arm.run_time(speed=200, time=4500, wait=None)  # transferring the minecart
+    right_arm.run_time(speed=-100, time=6500, wait=None)  # transferring the minecart
     left_arm.run_time(speed=-500, time=2000)
     left_arm.run_time(speed=300, time=2500)  # collecting the high vlue item
     # returning home
@@ -316,8 +316,8 @@ def run_none():
 
 
 runs = [
-    (WHITE, white_run, 1),
-    (BLACK, black_run, 2),
+    (BLACK, black_run, 1),
+    (WHITE, white_run, 2),
     (ORANGE, orange_run, 3),
     (YELLOW, yellow_run, 4),
     (BLUE, blue_run, 56),
