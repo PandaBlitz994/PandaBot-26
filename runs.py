@@ -87,8 +87,10 @@ def wheels_cleaning():
 
 
 def breakpoint():
+    chassis.use_gyro(False)
     while not Button.BLUETOOTH in hub.buttons.pressed():
         pass
+    chassis.use_gyro(True)
     wait(250)
 
 
@@ -189,7 +191,7 @@ def black_run():
     right_wheel_gyro(speed=150, gyro=0)
     straight_time(speed=500, time=1000)  # making shure we are at the right place
     # doing the missions
-    right_arm.run_time(speed=-100, time=6500, wait=None)  # transferring the minecart
+    right_arm.run_time(speed=-1000, time=5000, wait=None)  # transferring the minecart
     left_arm.run_time(speed=-500, time=2000)
     left_arm.run_time(speed=300, time=2500)  # collecting the high vlue item
     # returning home
@@ -282,14 +284,12 @@ def orange_run():
     # the juice
     straight_time(speed=500, time=2500)
     chassis.straight(-30)
-    right_arm.run(-1000)
-    left_arm.run_time(speed=1000, time=1600)
+    right_arm.run(-1000) # infinite spin
+    left_arm.run_time(speed=1000, time=2000)
     left_arm.run_time(speed=500, time=1500, wait=None)
     straight_time(speed=300, time=3000)
-    # wait(2000)
     # returning home
-    left_arm.run_time(speed=-1000, time=2000, wait=None)
-    # wait(500)
+    left_arm.run_time(speed=-1000, time=3000, wait=None)
     chassis.straight(-650)
 
 
