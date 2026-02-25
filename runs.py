@@ -39,7 +39,7 @@ def reset():
 WHITE = Color(h=0, s=0, v=100)
 RED = Color(h=352, s=92, v=75)
 BLUE = Color(h=218, s=94, v=72)
-GREEN = Color(h=96, s=67, v=88)
+GREEN = Color(h=155, s=78, v=48)
 YELLOW = Color(h=40, s=70, v=100)
 BLACK = Color(h=200, s=20, v=19)
 ORANGE = Color(h=7, s=86, v=99)
@@ -65,6 +65,17 @@ def check_battery_percent():
     v = hub.battery.voltage()  # Read battery voltage (mV)
     percent = int((v - 7000) * 100 // 1200)  # Convert voltage to percentage
     return percent
+
+
+def check_run_color():
+    print(
+        "run sensor hsv:",
+        run_color_sensor.hsv(),
+        "run sensor color:",
+        run_color_sensor.color(),
+        "run sensor reflection:",
+        run_color_sensor.reflection(),
+    )
 
 
 def wheels_cleaning():
@@ -288,6 +299,16 @@ def orange_run():
     chassis.straight(-650)
 
 
+def green_run():
+    # setup
+    reset()
+    # chassis.straight(400)
+    right_arm.run_time(speed=-1000, time=500)
+    right_arm.run_time(speed=1000, time=200)
+    chassis.straight(200)
+    chassis.straight(-500)
+
+
 def run_none():
     while True:
         pressed = hub.buttons.pressed()
@@ -306,6 +327,7 @@ runs = [
     (ORANGE, orange_run, 3),
     (YELLOW, yellow_run, 4),
     (BLUE, blue_run, 56),
+    (GREEN, green_run, 7),
     (NO_COLOR, run_none, 0),
 ]  # for each run: attachment color, run function, run number (for display)
 
