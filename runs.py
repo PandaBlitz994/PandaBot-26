@@ -15,8 +15,14 @@ right_arm = Motor(Port.F)  # Blue cable
 run_color_sensor = ColorSensor(Port.D)  # Yellow cable
 floor_color_sensor = ColorSensor(Port.C)  # Green cable
 
+timer = StopWatch()
 chassis = DriveBase(left_wheel, right_wheel, 62.4, 81)
 chassis.use_gyro(True)
+
+
+def get_time():
+    """Returns the time since the timer was last reset in seconds."""
+    return timer.time() / 1000  # Return time in seconds
 
 
 def reset_drive_settings():
@@ -86,11 +92,9 @@ def wheels_cleaning():
         wait(500)
 
 
-def breakpoint():
-    chassis.use_gyro(False)
+def wait_for_press():
     while not Button.BLUETOOTH in hub.buttons.pressed():
         pass
-    chassis.use_gyro(True)
     wait(250)
 
 
@@ -273,18 +277,27 @@ def blue_run():
         # mission 3 - who lived here?
         left_arm.run_time(speed=1200, time=1500)
         left_arm.run_time(speed=-1200, time=1000)
+        chassis.straight(-80)
+        turn_to(-90)
+        chassis.straight(-230)
+        # chassis.straight(200, then=Stop.NONE)
+        chassis.curve(radius=150, angle=-90, then=Stop.NONE)
+        chassis.straight(600)
         # back home
-        chassis.settings(straight_speed=-1000)
-        chassis.straight(-1000)
+        # chassis.settings(straight_speed=-1000)
+    # chassis.straight(-1000)
 
 
 def orange_run():
     # setup
     reset()
     # the juice
-    straight_time(speed=500, time=2500)
+    straight_time(speed=300, time=2500)
+    wait(500)
+    print(chassis.distance())
     chassis.straight(-30)
-    right_arm.run(-1000) # infinite spin
+    print(chassis.distance())
+    right_arm.run(-1000)
     left_arm.run_time(speed=1000, time=2000)
     left_arm.run_time(speed=500, time=1500, wait=None)
     straight_time(speed=300, time=3000)
@@ -316,14 +329,14 @@ def run_none():
 
 
 runs = [
-    (BLACK, black_run, 1),
-    (WHITE, white_run, 2),
-    (ORANGE, orange_run, 3),
-    (YELLOW, yellow_run, 4),
-    (BLUE, blue_run, 56),
-    (GREEN, green_run, 7),
-    (NO_COLOR, run_none, 0),
-]  # for each run: attachment color, run function, run number (for display)
+    (WHITE, white_run, 1, "WHITE"),
+    (BLACK, black_run, 2, "BLACK"),
+    (ORANGE, orange_run, 3, "ORANGE"),
+    (YELLOW, yellow_run, 4, "YELLOW"),
+    (BLUE, blue_run, 56, "BLUE"),
+    (GREEN, green_run, 7, "GREEN"),
+    (NO_COLOR, run_none, 0, "NO_COLOR"),
+]  # for each run: attachment color, run function, run number (for display), color name
 
 finished = False
 while not finished:
@@ -333,5 +346,7 @@ while not finished:
             hub.display.number(run[2])  # Display run number on the matrix (screen)
             hub.light.on(run[0])  # Change the button light color to the run color
             print("BAT_percent:", f"{check_battery_percent()}%")
+            timer.reset()
             run[1]()  # Run the run funciton
+            print("Run time:", f"{get_time()}s", f"{run[3]}_run")
             break
