@@ -137,12 +137,12 @@ def left_wheel_gyro(speed, gyro):
         left_wheel.stop()
 
 
-def straight_time(speed, time):
+def straight_time(speed, time, turn_rate=0):
     """speed: Number, mm/s
     time: Number, ms
     """
     chassis.use_gyro(False)
-    chassis.drive(speed, 0)
+    chassis.drive(speed, turn_rate)
     wait(time)
     chassis.stop()
     chassis.use_gyro(True)
@@ -292,7 +292,7 @@ def orange_run():
     # setup
     reset()
     # the juice
-    straight_time(speed=300, time=2500)
+    straight_time(speed=300, time=2500, turn_rate=15)
     wait(500)
     print(chassis.distance())
     chassis.straight(-30)
