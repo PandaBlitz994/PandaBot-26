@@ -309,11 +309,18 @@ def orange_run():
 def green_run():
     # setup
     reset()
-    # chassis.straight(400)
-    right_arm.run_time(speed=-1000, time=500)
-    right_arm.run_time(speed=1000, time=200)
-    chassis.straight(200)
-    chassis.straight(-500)
+    right_arm.run_time(speed=1800, time=750, wait=None)
+    left_arm.run_time(speed=-1000, time=500)
+    #going to the statue
+    chassis.curve(radius=1580, angle=35)
+    chassis.turn(15)
+    chassis.straight(78.5)
+    # doing the mission
+    right_arm.run_time(speed=-400, time=1000)
+    right_arm.run_time(speed=400, time=1000)
+    #opening the box :)
+    chassis.straight(25)
+    left_arm.run_time(speed=1000, time=500)
 
 
 def run_none():
